@@ -6,6 +6,8 @@ using scala, z3, ANTLR4 and LLVM.
 
 ### Run
 
+Folder ```lang``` is the base folder for all scala code. 
+
 ```
 $ cd lang 
 $ sbt
@@ -14,6 +16,6 @@ $ sbt
 $ ~run 
 ```
 
-```~``` for re-run on file changes. 
+ ```~```  for re-run on file changes. 
 
 
