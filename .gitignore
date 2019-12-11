@@ -6,3 +6,8 @@ test/target/*
 *.class
 *.java
 *.interp
+*.out
+*.so
+*.o
+*.go
+*.webp
