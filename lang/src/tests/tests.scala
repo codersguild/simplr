@@ -1,3 +1,0 @@
-object Tests extends App {
-
-}
