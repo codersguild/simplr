@@ -1,0 +1,5 @@
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [parser-symbolic-exec / Compile / run] Found inputs: /home/virtualvms/Documents/Research/parser-symbolic-exec/*.{java,scala},/home/virtualvms/Documents/Research/parser-symbolic-exec/src/main/java/**/*.{java,scala},/home/virtualvms/Documents/Research/parser-symbolic-exec/src/main/resources/**/*,/home/virtualvms/Documents/Research/parser-symbolic-exec/src/main/scala/**/*.{java,scala},/home/virtualvms/Documents/Research/parser-symbolic-exec/src/main/scala-2.12/**/*.{java,scala}[0m
+[0m[[0m[0minfo[0m] [0m[0m1. Monitoring source files for parser-symbolic-exec/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m

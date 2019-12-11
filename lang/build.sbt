@@ -12,9 +12,9 @@ scalaVersion := "2.13.1"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "hello-world"
-organization := "ch.epfl.scala"
-version := "1.0"
+name := "lang-parser"
+organization := "cse.iitk.ac.in"
+version := "1.0.0"
 
 // Note, it's not required for you to define these three settings. These are
 // mostly only necessary if you intend to publish your library's binaries on a
