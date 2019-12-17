@@ -3,9 +3,11 @@
 **/target/*
 **/test/debug/*
 **/test/target/*
+*.tokens
 *.class
 *.java
 *.interp
+*.interop
 *.out
 *.so
 *.o
