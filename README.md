@@ -6,10 +6,10 @@ using scala, z3, ANTLR4 and LLVM.
 
 ### Run
 
-Folder ```lang``` is the base folder for all scala code. 
+Folder ```code``` is the base folder for all scala code. 
 
 ```
-$ cd lang 
+$ cd code
 $ sbt
 (wait for build to complete...)
 
