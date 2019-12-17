@@ -1,8 +1,8 @@
-project/project/*
-project/target/*
-target/*
-test/debug/*
-test/target/*
+**/project/project/*
+**/project/target/*
+**/target/*
+**/test/debug/*
+**/test/target/*
 *.class
 *.java
 *.interp
