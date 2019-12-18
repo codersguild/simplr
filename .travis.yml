@@ -1,8 +1,15 @@
 language: scala
+
+jdk: openjdk8
+
 scala:
   - 2.9.3
   - 2.10.6
   - 2.11.11
   - 2.12.2
 
-before_script: cd code
+before_script: 
+          cd code
+
+script:
+          sbt run
