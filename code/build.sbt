@@ -24,6 +24,12 @@ version := "1.0.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+
+libraryDependencies ++= Seq(
+  "org.antlr" % "antlr4-runtime" % "4.6",
+  "org.antlr" % "stringtemplate" % "3.2"
+)
+
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the cats dependency to the set of dependencies that sbt will go
 // and fetch when it starts up.

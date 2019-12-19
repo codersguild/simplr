@@ -1,3 +1,4 @@
+package ast
 import scala.collection.mutable._
 
 object ast {
@@ -17,7 +18,7 @@ object ast {
             case "|" => x | y
             case "^" => x ^ y
             case ">>" => x >> y
-            case  "<<" => x << y
+            case "<<" => x << y
         }
         
         def updatevalues (delta : Map[String, Int], symb : String, vals : Int) {

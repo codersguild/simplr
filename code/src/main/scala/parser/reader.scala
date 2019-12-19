@@ -2,8 +2,7 @@ package reader
 
 import scala.collection.mutable._
 import scala.collection.immutable._
-import scala.io.StdIn._
-import scala.io.Source
+import scala.io._
 
 object reader {
     
