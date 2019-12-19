@@ -1,4 +1,9 @@
+import reader._
+
 object Main extends App {
-    println("Parsing...")
+    
+    val sample_code = reader.read(args(0))
+    
+
 }
 
