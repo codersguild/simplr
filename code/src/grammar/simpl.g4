@@ -1,75 +1,70 @@
 grammar simpl;
 
+program
+   : statement* EOF
+   ;
+
 statement 
-   : assignmentStatement END_STATEMENT
-   | declarationStatement END_STATEMENT
-   | conditionStatement END_STATEMENT
-   | assertStatement END_STATEMENT
-   | printStatement END_STATEMENT
-// | loopStatement
+   : assignmentStatement END_STATEMENT 
+   | declarationStatement END_STATEMENT 
+   | conditionStatement 
+   | assertStatement END_STATEMENT 
+   | printStatement END_STATEMENT 
+   | NEWLINE
    ;
 
 declarationStatement
    : TYPE identifier
-   | TYPE assignmentStatement
    ;
 
 assertStatement
-   : 'assert' LPAREN relopExpression RPAREN
+   : ASSERT LPAREN relopExpression RPAREN
    ;
 
 printStatement
-   : 'print' LPAREN expression RPAREN
+   : PRINT LPAREN expression RPAREN
    ;
 
 conditionStatement
-   :   'if' '(' expression ')' statement ('else' statement)?
+   :  IF LPAREN relopExpression RPAREN statement (ELSE statement) ?
    ;
 
 assignmentStatement
-   :   identifier assignmentOperator assignmentExpression
+   :  TYPE identifier ASSIGNMENT expression
+   |  identifier ASSIGNMENT expression
    ;
 
-assignmentExpression
-   :   identifier
-   |   expression
-   ;
-
-assignmentOperator
-   :   '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|='
+ASSIGNMENT
+   :  '=' 
    ;
 
 identifier
    : VARIABLE
    ;
 
-initializer
-   : expression
-   ;
-
 relopExpression
    : identifier relop expression
+   | expression relop expression
    ;
 
 expression
    :  expression POW expression
-   |  expression (MULT | DIV)  expression
+   |  expression (MULT | DIV) expression
    |  expression (PLUS | MINUS) expression
+   |  terminal
+   |  MINUS terminal
    |  LPAREN expression RPAREN
-   |  (PLUS | MINUS) pureliteral
    ;
 
-pureliteral
-   : numberOnly
-   | variable
-   ;
-
-numberOnly
+terminal
    : PURE_NUMBER
+   | VARIABLE
    ;
 
-variable
-   : VARIABLE
+TYPE 
+   : 'int'
+   | 'char'
+   | 'bool'
    ;
 
 relop
@@ -78,52 +73,44 @@ relop
    | LT
    ;
 
-VARIABLE
-   : VALID_ID_START VALID_ID_CHAR*
-   ;
-
-fragment VALID_ID_START
-   : ('a' .. 'z') | ('A' .. 'Z') | '_'
-   ;
-
-fragment VALID_ID_CHAR
-   : VALID_ID_START | ('0' .. '9')
-   ;
-
 PURE_NUMBER
-   : NUMBER (SIGN? UNSIGNED_INTEGER)?
+   : NUMBER
    ;
 
-fragment NUMBER
-   : ('0' .. '9') + ('.' ('0' .. '9') +)?
-   ;
-
-fragment UNSIGNED_INTEGER
+NUMBER
    : ('0' .. '9')+
    ;
 
-fragment SIGN
-   : ('+' | '-')
+NEWLINE
+   :  '\r'? '\n' ;
+
+IF 
+   : 'if'
    ;
 
-TYPE 
-   : 'int'
+ELSE 
+   : 'else'
    ;
 
 LPAREN
    : '('
    ;
 
+PRINT
+   : 'print'
+   ;
 
 RPAREN
    : ')'
    ;
 
+ASSERT 
+   : 'assert'
+   ;
 
 PLUS
    : '+'
    ;
-
 
 MINUS
    : '-'
@@ -146,7 +133,7 @@ LT
    ;
 
 EQ
-   : '='
+   : '=='
    ;
 
 GTEQ 
@@ -155,10 +142,6 @@ GTEQ
 
 LTEQ 
    : '<='
-   ;
-
-POINT
-   : '.'
    ;
 
 POW
@@ -173,40 +156,14 @@ END_STATEMENT
    : ';'
    ;
 
-// loopStatement
-//    :   'for' '(' forCondition ')' statement
-//    ;
+VARIABLE
+   : VALID_ID_START VALID_ID_CHAR*
+   ;
 
-// forCondition
-// 	:   forDeclaration ';' forExpression? ';' forExpression?
-// 	|   expression? ';' forExpression? ';' forExpression?
-// 	;
+VALID_ID_START
+   : ('a' .. 'z') | ('A' .. 'Z') | '_'
+   ;
 
-// forDeclaration
-//    :  declarationSpecifiers initDeclaratorList
-// 	| 	declarationSpecifiers
-//    ;
-
-// forExpression
-//    :   assignmentStatement
-//    |   forExpression ',' assignmentStatement
-//    ;
-
-// // specify declaration like statement.
-// declarationSpecifiers
-//    : declarationSpecifier+ 
-//    ;
-
-// declarationSpecifier
-//    : initDeclarator+
-//    ;
-
-// initDeclaratorList
-//    :   initDeclarator
-//    |   initDeclaratorList ',' initDeclarator
-//    ;
-
-// initDeclarator
-//    :   declarator
-//    |   declarator '=' initializer
-//    ;
+VALID_ID_CHAR
+   : VALID_ID_START | ('0' .. '9')
+   ;
