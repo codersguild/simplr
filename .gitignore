@@ -5,7 +5,6 @@
 **/test/target/*
 *.tokens
 *.class
-*.java
 *.interp
 *.interop
 *.out
