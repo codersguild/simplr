@@ -39,7 +39,7 @@ ASSIGNMENT
    ;
 
 identifier
-   : VARIABLE
+   : variable
    ;
 
 relopExpression
@@ -51,14 +51,10 @@ expression
    :  expression POW expression
    |  expression (MULT | DIV) expression
    |  expression (PLUS | MINUS) expression
-   |  terminal
-   |  MINUS terminal
+   |  pure_number
+   |  variable
+   |  MINUS variable
    |  LPAREN expression RPAREN
-   ;
-
-terminal
-   : PURE_NUMBER
-   | VARIABLE
    ;
 
 TYPE 
@@ -73,7 +69,7 @@ relop
    | LT
    ;
 
-PURE_NUMBER
+pure_number
    : NUMBER
    ;
 
@@ -156,7 +152,7 @@ END_STATEMENT
    : ';'
    ;
 
-VARIABLE
+variable
    : VALID_ID_START VALID_ID_CHAR*
    ;
 
