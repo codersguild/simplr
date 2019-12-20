@@ -3,3 +3,5 @@ y = 56;
 z = x + 2 * y;
 assert (z > x);
 assert (z > y);
+print (z);
+print (y);
