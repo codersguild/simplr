@@ -71,6 +71,12 @@ public interface simplVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(simplParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link simplParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(simplParser.TypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link simplParser#relop}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

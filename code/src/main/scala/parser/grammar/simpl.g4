@@ -14,7 +14,7 @@ statement
    ;
 
 declarationStatement
-   : TYPE identifier
+   : type identifier
    ;
 
 assertStatement
@@ -30,8 +30,8 @@ conditionStatement
    ;
 
 assignmentStatement
-   :  TYPE identifier ASSIGNMENT expression
-   |  identifier ASSIGNMENT expression
+   :  typ=type left=identifier assign=ASSIGNMENT right=expression
+   |  left=identifier assign=ASSIGNMENT right=expression
    ;
 
 ASSIGNMENT
@@ -48,19 +48,23 @@ relopExpression
    ;
 
 expression
-   :  expression POW expression
-   |  expression (MULT | DIV) expression
-   |  expression (PLUS | MINUS) expression
-   |  pure_number
-   |  variable
-   |  MINUS variable
-   |  LPAREN expression RPAREN
+   :  left=expression op=POW right=expression
+   |  left=expression op=(MULT | DIV) right=expression
+   |  left=expression op=(PLUS | MINUS) right=expression
+   |  num=pure_number
+   |  var=variable
+   |  MINUS var=variable
+   |  LPAREN main_expr=expression RPAREN
    ;
 
 TYPE 
    : 'int'
    | 'char'
    | 'bool'
+   ;
+
+type
+   : TYPE
    ;
 
 relop

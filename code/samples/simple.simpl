@@ -1,7 +1,6 @@
-x = 90;
-y = 56;
-z = x + 2 * y;
-assert (z > x);
-assert (z > y);
-print (z);
-print (y);
+int x = 90;
+int y = 56;
+int z = x + 34 * y;
+int b = z - x;
+int s = 908;
+z = 90 + x - y * b;

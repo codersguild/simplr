@@ -1,11 +1,10 @@
 import reader._
+import parser._
 
 object Main extends App {
     
-    // val sample_code = reader.read(args(0))
-    // for (lines <- sample_code) {
-        
-    // }
+    val sample_code = reader.read(args(0))
+    sample_code.foreach (parser.parserEngine)
         
 
 }

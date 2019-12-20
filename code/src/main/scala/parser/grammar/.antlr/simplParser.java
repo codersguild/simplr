@@ -23,12 +23,12 @@ public class simplParser extends Parser {
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_declarationStatement = 2, RULE_assertStatement = 3, 
 		RULE_printStatement = 4, RULE_conditionStatement = 5, RULE_assignmentStatement = 6, 
-		RULE_identifier = 7, RULE_relopExpression = 8, RULE_expression = 9, RULE_relop = 10, 
-		RULE_pure_number = 11, RULE_variable = 12;
+		RULE_identifier = 7, RULE_relopExpression = 8, RULE_expression = 9, RULE_type = 10, 
+		RULE_relop = 11, RULE_pure_number = 12, RULE_variable = 13;
 	public static final String[] ruleNames = {
 		"program", "statement", "declarationStatement", "assertStatement", "printStatement", 
 		"conditionStatement", "assignmentStatement", "identifier", "relopExpression", 
-		"expression", "relop", "pure_number", "variable"
+		"expression", "type", "relop", "pure_number", "variable"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -112,21 +112,21 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(29);
+			setState(31);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << TYPE) | (1L << NEWLINE) | (1L << IF) | (1L << PRINT) | (1L << ASSERT) | (1L << VALID_ID_START))) != 0)) {
 				{
 				{
-				setState(26);
+				setState(28);
 				statement();
 				}
 				}
-				setState(31);
+				setState(33);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(32);
+			setState(34);
 			match(EOF);
 			}
 		}
@@ -169,56 +169,56 @@ public class simplParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_statement);
 		try {
-			setState(48);
+			setState(50);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(34);
+				setState(36);
 				assignmentStatement();
-				setState(35);
+				setState(37);
 				match(END_STATEMENT);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(37);
+				setState(39);
 				declarationStatement();
-				setState(38);
+				setState(40);
 				match(END_STATEMENT);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(40);
+				setState(42);
 				conditionStatement();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(41);
+				setState(43);
 				assertStatement();
-				setState(42);
+				setState(44);
 				match(END_STATEMENT);
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(44);
+				setState(46);
 				printStatement();
-				setState(45);
+				setState(47);
 				match(END_STATEMENT);
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(47);
+				setState(49);
 				match(NEWLINE);
 				}
 				break;
@@ -236,7 +236,9 @@ public class simplParser extends Parser {
 	}
 
 	public static class DeclarationStatementContext extends ParserRuleContext {
-		public TerminalNode TYPE() { return getToken(simplParser.TYPE, 0); }
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
@@ -252,9 +254,9 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(50);
-			match(TYPE);
-			setState(51);
+			setState(52);
+			type();
+			setState(53);
 			identifier();
 			}
 		}
@@ -288,13 +290,13 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
-			match(ASSERT);
-			setState(54);
-			match(LPAREN);
 			setState(55);
-			relopExpression();
+			match(ASSERT);
 			setState(56);
+			match(LPAREN);
+			setState(57);
+			relopExpression();
+			setState(58);
 			match(RPAREN);
 			}
 		}
@@ -328,13 +330,13 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
-			match(PRINT);
-			setState(59);
-			match(LPAREN);
 			setState(60);
-			expression(0);
+			match(PRINT);
 			setState(61);
+			match(LPAREN);
+			setState(62);
+			expression(0);
+			setState(63);
 			match(RPAREN);
 			}
 		}
@@ -375,24 +377,24 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63);
-			match(IF);
-			setState(64);
-			match(LPAREN);
 			setState(65);
-			relopExpression();
+			match(IF);
 			setState(66);
-			match(RPAREN);
+			match(LPAREN);
 			setState(67);
+			relopExpression();
+			setState(68);
+			match(RPAREN);
+			setState(69);
 			statement();
-			setState(70);
+			setState(72);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				{
-				setState(68);
+				setState(70);
 				match(ELSE);
-				setState(69);
+				setState(71);
 				statement();
 				}
 				break;
@@ -411,7 +413,13 @@ public class simplParser extends Parser {
 	}
 
 	public static class AssignmentStatementContext extends ParserRuleContext {
-		public TerminalNode TYPE() { return getToken(simplParser.TYPE, 0); }
+		public TypeContext typ;
+		public IdentifierContext left;
+		public Token assign;
+		public ExpressionContext right;
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
@@ -429,31 +437,31 @@ public class simplParser extends Parser {
 		AssignmentStatementContext _localctx = new AssignmentStatementContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_assignmentStatement);
 		try {
-			setState(81);
+			setState(83);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TYPE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(72);
-				match(TYPE);
-				setState(73);
-				identifier();
 				setState(74);
-				match(ASSIGNMENT);
+				((AssignmentStatementContext)_localctx).typ = type();
 				setState(75);
-				expression(0);
+				((AssignmentStatementContext)_localctx).left = identifier();
+				setState(76);
+				((AssignmentStatementContext)_localctx).assign = match(ASSIGNMENT);
+				setState(77);
+				((AssignmentStatementContext)_localctx).right = expression(0);
 				}
 				break;
 			case VALID_ID_START:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(77);
-				identifier();
-				setState(78);
-				match(ASSIGNMENT);
 				setState(79);
-				expression(0);
+				((AssignmentStatementContext)_localctx).left = identifier();
+				setState(80);
+				((AssignmentStatementContext)_localctx).assign = match(ASSIGNMENT);
+				setState(81);
+				((AssignmentStatementContext)_localctx).right = expression(0);
 				}
 				break;
 			default:
@@ -487,7 +495,7 @@ public class simplParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
+			setState(85);
 			variable();
 			}
 		}
@@ -525,28 +533,28 @@ public class simplParser extends Parser {
 		RelopExpressionContext _localctx = new RelopExpressionContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_relopExpression);
 		try {
-			setState(93);
+			setState(95);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(85);
-				identifier();
-				setState(86);
-				relop();
 				setState(87);
+				identifier();
+				setState(88);
+				relop();
+				setState(89);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(89);
-				expression(0);
-				setState(90);
-				relop();
 				setState(91);
+				expression(0);
+				setState(92);
+				relop();
+				setState(93);
 				expression(0);
 				}
 				break;
@@ -564,6 +572,12 @@ public class simplParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
+		public ExpressionContext left;
+		public Pure_numberContext num;
+		public VariableContext var;
+		public ExpressionContext main_expr;
+		public Token op;
+		public ExpressionContext right;
 		public Pure_numberContext pure_number() {
 			return getRuleContext(Pure_numberContext.class,0);
 		}
@@ -572,13 +586,13 @@ public class simplParser extends Parser {
 		}
 		public TerminalNode MINUS() { return getToken(simplParser.MINUS, 0); }
 		public TerminalNode LPAREN() { return getToken(simplParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(simplParser.RPAREN, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode RPAREN() { return getToken(simplParser.RPAREN, 0); }
 		public TerminalNode POW() { return getToken(simplParser.POW, 0); }
 		public TerminalNode MULT() { return getToken(simplParser.MULT, 0); }
 		public TerminalNode DIV() { return getToken(simplParser.DIV, 0); }
@@ -605,36 +619,36 @@ public class simplParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(104);
+			setState(106);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				{
-				setState(96);
-				pure_number();
+				setState(98);
+				((ExpressionContext)_localctx).num = pure_number();
 				}
 				break;
 			case VALID_ID_START:
 				{
-				setState(97);
-				variable();
+				setState(99);
+				((ExpressionContext)_localctx).var = variable();
 				}
 				break;
 			case MINUS:
 				{
-				setState(98);
+				setState(100);
 				match(MINUS);
-				setState(99);
-				variable();
+				setState(101);
+				((ExpressionContext)_localctx).var = variable();
 				}
 				break;
 			case LPAREN:
 				{
-				setState(100);
-				match(LPAREN);
-				setState(101);
-				expression(0);
 				setState(102);
+				match(LPAREN);
+				setState(103);
+				((ExpressionContext)_localctx).main_expr = expression(0);
+				setState(104);
 				match(RPAREN);
 				}
 				break;
@@ -642,7 +656,7 @@ public class simplParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(117);
+			setState(119);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -650,65 +664,73 @@ public class simplParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(115);
+					setState(117);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx.left = _prevctx;
+						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(106);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(107);
-						match(POW);
 						setState(108);
-						expression(8);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(109);
+						((ExpressionContext)_localctx).op = match(POW);
+						setState(110);
+						((ExpressionContext)_localctx).right = expression(8);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx.left = _prevctx;
+						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(109);
+						setState(111);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(110);
+						setState(112);
+						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==MULT || _la==DIV) ) {
-						_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(111);
-						expression(7);
+						setState(113);
+						((ExpressionContext)_localctx).right = expression(7);
 						}
 						break;
 					case 3:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx.left = _prevctx;
+						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(112);
+						setState(114);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(113);
+						setState(115);
+						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
-						_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(114);
-						expression(6);
+						setState(116);
+						((ExpressionContext)_localctx).right = expression(6);
 						}
 						break;
 					}
 					} 
 				}
-				setState(119);
+				setState(121);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
@@ -725,6 +747,35 @@ public class simplParser extends Parser {
 		return _localctx;
 	}
 
+	public static class TypeContext extends ParserRuleContext {
+		public TerminalNode TYPE() { return getToken(simplParser.TYPE, 0); }
+		public TypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_type; }
+	}
+
+	public final TypeContext type() throws RecognitionException {
+		TypeContext _localctx = new TypeContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_type);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(122);
+			match(TYPE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class RelopContext extends ParserRuleContext {
 		public TerminalNode EQ() { return getToken(simplParser.EQ, 0); }
 		public TerminalNode GT() { return getToken(simplParser.GT, 0); }
@@ -737,12 +788,12 @@ public class simplParser extends Parser {
 
 	public final RelopContext relop() throws RecognitionException {
 		RelopContext _localctx = new RelopContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_relop);
+		enterRule(_localctx, 22, RULE_relop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(124);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << LT) | (1L << EQ))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -775,11 +826,11 @@ public class simplParser extends Parser {
 
 	public final Pure_numberContext pure_number() throws RecognitionException {
 		Pure_numberContext _localctx = new Pure_numberContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_pure_number);
+		enterRule(_localctx, 24, RULE_pure_number);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122);
+			setState(126);
 			match(NUMBER);
 			}
 		}
@@ -808,26 +859,26 @@ public class simplParser extends Parser {
 
 	public final VariableContext variable() throws RecognitionException {
 		VariableContext _localctx = new VariableContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_variable);
+		enterRule(_localctx, 26, RULE_variable);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124);
-			match(VALID_ID_START);
 			setState(128);
+			match(VALID_ID_START);
+			setState(132);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(125);
+					setState(129);
 					match(VALID_ID_CHAR);
 					}
 					} 
 				}
-				setState(130);
+				setState(134);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
@@ -864,40 +915,41 @@ public class simplParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u0086\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u008a\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
-		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\7\2\36\n\2\f\2\16\2!\13\2\3\2\3\2"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\63\n\3\3"+
-		"\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\5\7I\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bT\n\b\3\t\3\t"+
-		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n`\n\n\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\3\13\3\13\3\13\5\13k\n\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\7\13v\n\13\f\13\16\13y\13\13\3\f\3\f\3\r\3\r\3\16\3\16\7\16\u0081\n\16"+
-		"\f\16\16\16\u0084\13\16\3\16\2\3\24\17\2\4\6\b\n\f\16\20\22\24\26\30\32"+
-		"\2\5\3\2\17\20\3\2\r\16\3\2\21\23\2\u0088\2\37\3\2\2\2\4\62\3\2\2\2\6"+
-		"\64\3\2\2\2\b\67\3\2\2\2\n<\3\2\2\2\fA\3\2\2\2\16S\3\2\2\2\20U\3\2\2\2"+
-		"\22_\3\2\2\2\24j\3\2\2\2\26z\3\2\2\2\30|\3\2\2\2\32~\3\2\2\2\34\36\5\4"+
-		"\3\2\35\34\3\2\2\2\36!\3\2\2\2\37\35\3\2\2\2\37 \3\2\2\2 \"\3\2\2\2!\37"+
-		"\3\2\2\2\"#\7\2\2\3#\3\3\2\2\2$%\5\16\b\2%&\7\30\2\2&\63\3\2\2\2\'(\5"+
-		"\6\4\2()\7\30\2\2)\63\3\2\2\2*\63\5\f\7\2+,\5\b\5\2,-\7\30\2\2-\63\3\2"+
-		"\2\2./\5\n\6\2/\60\7\30\2\2\60\63\3\2\2\2\61\63\7\6\2\2\62$\3\2\2\2\62"+
-		"\'\3\2\2\2\62*\3\2\2\2\62+\3\2\2\2\62.\3\2\2\2\62\61\3\2\2\2\63\5\3\2"+
-		"\2\2\64\65\7\4\2\2\65\66\5\20\t\2\66\7\3\2\2\2\678\7\f\2\289\7\t\2\29"+
-		":\5\22\n\2:;\7\13\2\2;\t\3\2\2\2<=\7\n\2\2=>\7\t\2\2>?\5\24\13\2?@\7\13"+
-		"\2\2@\13\3\2\2\2AB\7\7\2\2BC\7\t\2\2CD\5\22\n\2DE\7\13\2\2EH\5\4\3\2F"+
-		"G\7\b\2\2GI\5\4\3\2HF\3\2\2\2HI\3\2\2\2I\r\3\2\2\2JK\7\4\2\2KL\5\20\t"+
-		"\2LM\7\3\2\2MN\5\24\13\2NT\3\2\2\2OP\5\20\t\2PQ\7\3\2\2QR\5\24\13\2RT"+
-		"\3\2\2\2SJ\3\2\2\2SO\3\2\2\2T\17\3\2\2\2UV\5\32\16\2V\21\3\2\2\2WX\5\20"+
-		"\t\2XY\5\26\f\2YZ\5\24\13\2Z`\3\2\2\2[\\\5\24\13\2\\]\5\26\f\2]^\5\24"+
-		"\13\2^`\3\2\2\2_W\3\2\2\2_[\3\2\2\2`\23\3\2\2\2ab\b\13\1\2bk\5\30\r\2"+
-		"ck\5\32\16\2de\7\16\2\2ek\5\32\16\2fg\7\t\2\2gh\5\24\13\2hi\7\13\2\2i"+
-		"k\3\2\2\2ja\3\2\2\2jc\3\2\2\2jd\3\2\2\2jf\3\2\2\2kw\3\2\2\2lm\f\t\2\2"+
-		"mn\7\26\2\2nv\5\24\13\nop\f\b\2\2pq\t\2\2\2qv\5\24\13\trs\f\7\2\2st\t"+
-		"\3\2\2tv\5\24\13\bul\3\2\2\2uo\3\2\2\2ur\3\2\2\2vy\3\2\2\2wu\3\2\2\2w"+
-		"x\3\2\2\2x\25\3\2\2\2yw\3\2\2\2z{\t\4\2\2{\27\3\2\2\2|}\7\5\2\2}\31\3"+
-		"\2\2\2~\u0082\7\31\2\2\177\u0081\7\32\2\2\u0080\177\3\2\2\2\u0081\u0084"+
-		"\3\2\2\2\u0082\u0080\3\2\2\2\u0082\u0083\3\2\2\2\u0083\33\3\2\2\2\u0084"+
-		"\u0082\3\2\2\2\13\37\62HS_juw\u0082";
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\3\2\7\2 \n\2\f\2\16\2#\13\2"+
+		"\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\65"+
+		"\n\3\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3"+
+		"\7\3\7\3\7\3\7\5\7K\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bV\n\b\3"+
+		"\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\nb\n\n\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\3\13\3\13\5\13m\n\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\7\13x\n\13\f\13\16\13{\13\13\3\f\3\f\3\r\3\r\3\16\3\16\3\17"+
+		"\3\17\7\17\u0085\n\17\f\17\16\17\u0088\13\17\3\17\2\3\24\20\2\4\6\b\n"+
+		"\f\16\20\22\24\26\30\32\34\2\5\3\2\17\20\3\2\r\16\3\2\21\23\2\u008b\2"+
+		"!\3\2\2\2\4\64\3\2\2\2\6\66\3\2\2\2\b9\3\2\2\2\n>\3\2\2\2\fC\3\2\2\2\16"+
+		"U\3\2\2\2\20W\3\2\2\2\22a\3\2\2\2\24l\3\2\2\2\26|\3\2\2\2\30~\3\2\2\2"+
+		"\32\u0080\3\2\2\2\34\u0082\3\2\2\2\36 \5\4\3\2\37\36\3\2\2\2 #\3\2\2\2"+
+		"!\37\3\2\2\2!\"\3\2\2\2\"$\3\2\2\2#!\3\2\2\2$%\7\2\2\3%\3\3\2\2\2&\'\5"+
+		"\16\b\2\'(\7\30\2\2(\65\3\2\2\2)*\5\6\4\2*+\7\30\2\2+\65\3\2\2\2,\65\5"+
+		"\f\7\2-.\5\b\5\2./\7\30\2\2/\65\3\2\2\2\60\61\5\n\6\2\61\62\7\30\2\2\62"+
+		"\65\3\2\2\2\63\65\7\6\2\2\64&\3\2\2\2\64)\3\2\2\2\64,\3\2\2\2\64-\3\2"+
+		"\2\2\64\60\3\2\2\2\64\63\3\2\2\2\65\5\3\2\2\2\66\67\5\26\f\2\678\5\20"+
+		"\t\28\7\3\2\2\29:\7\f\2\2:;\7\t\2\2;<\5\22\n\2<=\7\13\2\2=\t\3\2\2\2>"+
+		"?\7\n\2\2?@\7\t\2\2@A\5\24\13\2AB\7\13\2\2B\13\3\2\2\2CD\7\7\2\2DE\7\t"+
+		"\2\2EF\5\22\n\2FG\7\13\2\2GJ\5\4\3\2HI\7\b\2\2IK\5\4\3\2JH\3\2\2\2JK\3"+
+		"\2\2\2K\r\3\2\2\2LM\5\26\f\2MN\5\20\t\2NO\7\3\2\2OP\5\24\13\2PV\3\2\2"+
+		"\2QR\5\20\t\2RS\7\3\2\2ST\5\24\13\2TV\3\2\2\2UL\3\2\2\2UQ\3\2\2\2V\17"+
+		"\3\2\2\2WX\5\34\17\2X\21\3\2\2\2YZ\5\20\t\2Z[\5\30\r\2[\\\5\24\13\2\\"+
+		"b\3\2\2\2]^\5\24\13\2^_\5\30\r\2_`\5\24\13\2`b\3\2\2\2aY\3\2\2\2a]\3\2"+
+		"\2\2b\23\3\2\2\2cd\b\13\1\2dm\5\32\16\2em\5\34\17\2fg\7\16\2\2gm\5\34"+
+		"\17\2hi\7\t\2\2ij\5\24\13\2jk\7\13\2\2km\3\2\2\2lc\3\2\2\2le\3\2\2\2l"+
+		"f\3\2\2\2lh\3\2\2\2my\3\2\2\2no\f\t\2\2op\7\26\2\2px\5\24\13\nqr\f\b\2"+
+		"\2rs\t\2\2\2sx\5\24\13\ttu\f\7\2\2uv\t\3\2\2vx\5\24\13\bwn\3\2\2\2wq\3"+
+		"\2\2\2wt\3\2\2\2x{\3\2\2\2yw\3\2\2\2yz\3\2\2\2z\25\3\2\2\2{y\3\2\2\2|"+
+		"}\7\4\2\2}\27\3\2\2\2~\177\t\4\2\2\177\31\3\2\2\2\u0080\u0081\7\5\2\2"+
+		"\u0081\33\3\2\2\2\u0082\u0086\7\31\2\2\u0083\u0085\7\32\2\2\u0084\u0083"+
+		"\3\2\2\2\u0085\u0088\3\2\2\2\u0086\u0084\3\2\2\2\u0086\u0087\3\2\2\2\u0087"+
+		"\35\3\2\2\2\u0088\u0086\3\2\2\2\13!\64JUalwy\u0086";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

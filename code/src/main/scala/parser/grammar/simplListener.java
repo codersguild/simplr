@@ -108,6 +108,16 @@ public interface simplListener extends ParseTreeListener {
 	 */
 	void exitExpression(simplParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link simplParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(simplParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link simplParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(simplParser.TypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link simplParser#relop}.
 	 * @param ctx the parse tree
 	 */
