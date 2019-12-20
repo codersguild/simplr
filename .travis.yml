@@ -9,5 +9,4 @@ before_script:
           cd code
 
 script:
-          sbt 
-          run ./samples/simple.simpl
+          sbt run 
