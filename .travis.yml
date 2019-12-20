@@ -3,11 +3,10 @@ language: scala
 jdk: openjdk8
 
 scala:
-  - 2.11.11
-  - 2.12.2
+  - 2.13.1
 
 before_script: 
           cd code
 
 script:
-          sbt run
+          sbt run ./samples/simple.simpl

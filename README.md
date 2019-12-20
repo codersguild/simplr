@@ -28,6 +28,9 @@ $ ~run
  assert (x + y * 90 > 500);
  ```
 
+### Parse Tree
+
+![Parse-Tree](https://github.com/codersguild/parser-symbolic-exec/blob/master/code/src/main/scala/parser/grammar/grammar.png)
 
 
 
