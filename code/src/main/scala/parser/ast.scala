@@ -7,7 +7,7 @@ object ast {
 
     abstract class operators
     
-    class arth_binary_op (op : String, x : Int, y : Int) extends operators {
+    class _operations (op : String, x : Int, y : Int) extends operators {
         
         def evalfunction (x : Int, y : Int) = op match {
             case "+" => x + y
