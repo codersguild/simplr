@@ -26,7 +26,7 @@ version := "1.0.0"
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
 
 libraryDependencies ++= Seq(
-  "org.antlr" % "antlr4-runtime" % "4.6",
+  "org.antlr" % "antlr4-runtime" % "4.7.1",
   "org.antlr" % "stringtemplate" % "3.2"
 )
 
