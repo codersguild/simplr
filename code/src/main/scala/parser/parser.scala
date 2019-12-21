@@ -2,6 +2,7 @@ package parser
 
 import scala.collection.mutable._
 import org.antlr.v4.runtime._
+import com.microsoft.z3._
 import scala.io._
 import simpl._
 
@@ -9,6 +10,30 @@ object parser {
     
     val domain = Map[String, String]()
     val deltaValues = Map[String, Int]()
+
+    def z3Solving () {
+        val ctx: Context = new Context(new java.util.HashMap[String, String])  
+
+        val a: BoolExpr = ctx.mkBoolConst("a")
+        val b: BoolExpr = ctx.mkBoolConst("b")
+        val c: BoolExpr = ctx.mkBoolConst("c")
+
+        val formula: BoolExpr = ctx.mkAnd(ctx.mkOr(a, b), c)
+        val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
+
+        solver.add(formula)                                    
+        if(solver.check == Status.SATISFIABLE)                 
+        {
+            val model: Model = solver.getModel                   
+            val resultVa: Expr = model.eval(a, false)             
+            val resultVb: Expr = model.eval(b, false)
+            val resultVc: Expr = model.eval(c, false)
+
+            println(resultVa)   
+            println(resultVb)   
+            println(resultVc)   
+        }
+    }
 
     def evalfunction (x : Int, y : Int, op : String) : Int = op match {
         case "+" => return x + y

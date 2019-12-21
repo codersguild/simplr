@@ -9,5 +9,7 @@ object Main extends App {
     println("Domain : " + parser.domain)
     println("Delta : " + parser.deltaValues)
 
+    parser.z3Solving ()
+
 }
 

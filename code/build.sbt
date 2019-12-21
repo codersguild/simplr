@@ -30,6 +30,11 @@ libraryDependencies ++= Seq(
   "org.antlr" % "stringtemplate" % "3.2"
 )
 
+Compile / unmanagedJars += {
+  baseDirectory.value / "unmanaged" / s"scalaz3-unix-x64-2.13.jar"
+  baseDirectory.value / "unmanaged" / s"com.microsoft.z3.jar"
+}
+
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the cats dependency to the set of dependencies that sbt will go
 // and fetch when it starts up.
