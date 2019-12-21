@@ -5,28 +5,28 @@ program
    ;
 
 statement 
-   : assignmentStatement END_STATEMENT 
-   | declarationStatement END_STATEMENT 
-   | conditionStatement 
-   | assertStatement END_STATEMENT 
-   | printStatement END_STATEMENT 
+   : asgn=assignmentStatement END_STATEMENT 
+   | decl=declarationStatement END_STATEMENT
+   | cond=conditionStatement 
+   | asrt=assertStatement END_STATEMENT 
+   | prnt=printStatement END_STATEMENT 
    | NEWLINE
    ;
 
 declarationStatement
-   : type identifier
+   :  typ=type id=identifier
    ;
 
 assertStatement
-   : ASSERT LPAREN relopExpression RPAREN
+   :  stattype=ASSERT LPAREN relexp=relopExpression RPAREN
    ;
 
 printStatement
-   : PRINT LPAREN expression RPAREN
+   :  stattype=PRINT LPAREN printexp=expression RPAREN
    ;
 
 conditionStatement
-   :  IF LPAREN relopExpression RPAREN statement (ELSE statement) ?
+   :  stattype=IF LPAREN relexp=relopExpression RPAREN truestat=statement (ELSE falsestat=statement) ?
    ;
 
 assignmentStatement
@@ -43,8 +43,7 @@ identifier
    ;
 
 relopExpression
-   : identifier relop expression
-   | expression relop expression
+   : id=identifier rel=relop exp=expression
    ;
 
 expression
@@ -52,14 +51,13 @@ expression
    |  left=expression op=(MULT | DIV) right=expression
    |  left=expression op=(PLUS | MINUS) right=expression
    |  num=pure_number
-   |  var=variable
-   |  MINUS var=variable
+   |  varl=variable
+   |  MINUS varl=variable
    |  LPAREN main_expr=expression RPAREN
    ;
 
 TYPE 
    : 'int'
-   | 'char'
    | 'bool'
    ;
 

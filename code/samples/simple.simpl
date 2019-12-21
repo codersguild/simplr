@@ -1,6 +1,12 @@
 int x = 90;
-int y = 56;
-int z = x + 34 * y;
-int b = z - x;
-int s = 908;
-z = 90 + x - y * b;
+int y = 7898;
+int a;
+int b;
+bool m = 1;
+int z = 800 + 45 * (x + y / 25) + 899 - (x - y + 45 / 3);
+if (x > y) x = 90; else x = z - y;
+assert(x > y);
+assert(z > b);
+print(x);
+print(y);
+print(z);
