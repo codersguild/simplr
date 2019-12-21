@@ -9,4 +9,4 @@ before_script:
           cd code
 
 script:
-          sbt run 
+          sbt update
