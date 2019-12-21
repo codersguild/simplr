@@ -28,8 +28,8 @@ object parser {
         val SimplVisitorApp = new SimplExprVisitorParsing()
         val assign_result = SimplVisitorApp.visit(parse.statement())
 
-        // println(deltaValues)
-        // println(domain)
+        // println("Domain : " + parser.domain)
+        // println("Delta : " + parser.deltaValues)
     }
 
     sealed trait expression
