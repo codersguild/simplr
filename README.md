@@ -64,13 +64,46 @@ in ```parser.scala```.
     sat
 ```
 
+For ```simple.simpl``` file program. 
+
+```bash 
+    [info] running Main ./samples/simple.simpl
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: x) (result : 90)
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: b) (result : 0)
+    Print : (evalprintrec: x+20+5*y) : 39600
+    Print : (evalprintrec: y) : 7898
+    Print : (evalprintrec: z) : 27717
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: y*54-67*x) (result : 420462)
+    GreaterThanRuleAdded
+    AssertRule : (id: y) (relop: >) (condexpr: z/50+62) (result : 616)
+    AssignRuleAdded
+    Print : (evalprintrec: x-a+b-y+z*78) : 2154118
+    GreaterThanRuleAdded
+    AssertRule : (id: x) (relop: >) (condexpr: z*y) (result : 218908866)
+    Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool, n -> bool)
+    Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1, n -> 0)
+    unsat
+``` 
+
 ### TO-DO
 
 1.  How to process branch statements/conditionals ?
 2.  Check for variable redeclaration and redefiniton ?
-3.  Include Loops
-4.  Make Z3 Expressions while parsing. 
-
+3.  Add Support for boolean expressions.
+4.  Include Loops
+5.  Make Z3 Expressions while parsing. 
+6.  Make ANTRL4 Visitor parser do annotations and semantic analysis.
+7.  Printing the Z3 Model. 
 
 
 

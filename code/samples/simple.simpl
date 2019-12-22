@@ -10,4 +10,8 @@ assert(z > b);
 print(x + 20 + 5 * y);
 print(y);
 print(z);
-assert(z > y + 62)
+assert(z > y * 54 - 67 * x);
+assert(y > z / 50 + 62);
+bool n = 0;
+print(x - a + b - y + z * 78);
+assert(x > z * y);

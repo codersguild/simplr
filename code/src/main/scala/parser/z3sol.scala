@@ -51,9 +51,9 @@ object z3sol {
 
     def Z3Solver () {
         if(solver.check == Status.SATISFIABLE) {
-            println("sat")
+            println("SATISFIABLE : yes/sat")
         } else  {
-            println("unsat")
+            println("SATISFIABLE : no/unsat")
         }
     }
 
