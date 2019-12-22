@@ -8,11 +8,45 @@ object z3sol {
     val ctx: Context = new Context(new java.util.HashMap[String, String])  
     val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
 
-    def Z3AddConstraints (id : String, value : Int) {
+    def Z3AddConstraints (id : String, value : Int, cond : String) {
+        
         val _id :  IntExpr  = ctx.mkIntConst(id)
         val _expr : Expr = ctx.mkNumeral(value, ctx.mkIntSort())
-        val _formula : BoolExpr = ctx.mkEq(_id, _expr)
-        solver.add(_formula)    
+        var _formula : BoolExpr = ctx.mkEq(_id, _expr)
+
+        cond match {
+            case "assign" => {
+                _formula = ctx.mkEq(_id, _expr)
+                println("AssignRuleAdded")
+            }
+            
+            case "==" => {
+                _formula = ctx.mkEq(_id, _expr)
+                println("EqualRuleAdded")
+            }
+
+            case ">" => {
+                _formula = ctx.mkGt(_id, _expr.asInstanceOf[ArithExpr])
+                println("GreaterThanRuleAdded")
+            }
+
+            case "<" => {
+                _formula = ctx.mkLt(_id, _expr.asInstanceOf[ArithExpr])
+                println("LessThanRuleAdded")
+            }
+
+            case ">=" => {
+                _formula = ctx.mkGe(_id, _expr.asInstanceOf[ArithExpr])
+                println("GreaterThanEqualRuleAdded")
+            }
+
+            case "<=" => {
+                _formula = ctx.mkLe(_id, _expr.asInstanceOf[ArithExpr])
+                println("LessThanEqualRuleAdded")
+            }
+        }
+
+        solver.add(_formula)
     }
 
     def Z3Solver () {

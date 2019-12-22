@@ -5,8 +5,9 @@ int b;
 bool m = 1;
 int z = 800 + 45 * (x + y / 25) + 899 - (x - y + 45 / 3);
 if (x > y) x = 90; else x = z - y;
-assert(x > y);
+assert(z > x);
 assert(z > b);
 print(x + 20 + 5 * y);
 print(y);
 print(z);
+assert(z > y + 62)

@@ -9,7 +9,7 @@ object parser {
     
     val domain = Map[String, String]()
     val deltaValues = Map[String, Int]()
-    
+
     def evalfunction (x : Int, y : Int, op : String) : Int = op match {
         case "+" => return x + y
         case "-" => return x - y
@@ -51,7 +51,9 @@ object parser {
             var ident = ctx.relexp.id.getText
             var rule = ctx.relexp.rel.getText
             var condl = ctx.relexp.exp.getText
-            println(s"AssertRule : (id: $ident) (relop: $rule) (condexpr: $condl)")
+            var res = visitExpression(ctx.relexp.exp)
+            z3sol.Z3AddConstraints(ident, res.toInt, rule)
+            println(s"AssertRule : (id: $ident) (relop: $rule) (condexpr: $condl) (result : $res)")
             return ctx.getText.toString
         }
 
@@ -66,8 +68,9 @@ object parser {
             var ident = ctx.relexp.id.getText
             var rule = ctx.relexp.rel.getText
             var condl = ctx.relexp.exp.getText
-            var truebranch = ctx.truestat.getText
+            var truebranch = ctx.truestat.getText // What to visit false or true. 
             var falsebranch =  ctx.falsestat.getText
+            // z3sol.Z3AddConstraints(ident, deltaValues(condl.toString), rule)
             println(s"Conditional : (fullcondlexpr : $ident $rule $condl) ? (true) {$truebranch} : (false) ($falsebranch)") 
             return ctx.getText.toString
         }
@@ -76,6 +79,7 @@ object parser {
             val ident = ctx.id.getText.toString
             domain(ident) = ctx.typ.getText.toString
             deltaValues(ident) = 0; // zero-initalized by default 
+            z3sol.Z3AddConstraints(ident, 0, "assign")
             return ident;
         }
 
@@ -84,7 +88,7 @@ object parser {
             var ident = visitIdentifier(ctx.left)
             domain(ident) = ctx.typ.getText.toString
             deltaValues(ident) = expr.toInt
-            z3sol.Z3AddConstraints(ident, expr.toInt)
+            z3sol.Z3AddConstraints(ident, expr.toInt, "assign")
             return s"$ident = $expr"
         }
 

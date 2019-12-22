@@ -41,18 +41,39 @@ We pass ```simple.simpl``` file to  our lexer-parser and run parsing to generate
 in ```parser.scala```.
 
 ```bash
-    [warn] three warnings found
-    [info] running Main ./samples/simple.simpl
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
+    AssignRuleAdded
     Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
-    AssertRule : (id: x) (relop: >) (condexpr: y)
-    AssertRule : (id: z) (relop: >) (condexpr: b)
+    line 1:13 missing ';' at '<EOF>'
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: x) (result : 90)
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: b) (result : 0)
     Print : (evalprintrec: x+20+5*y) : 39600
     Print : (evalprintrec: y) : 7898
     Print : (evalprintrec: z) : 27717
+    line 1:18 missing ';' at '<EOF>'
+    GreaterThanRuleAdded
+    AssertRule : (id: z) (relop: >) (condexpr: y+62) (result : 7960)
     Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool)
     Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1)
     sat
 ```
+
+### TO-DO
+
+1.  How to process branch statements/conditionals ?
+2.  Check for variable redeclaration and redefiniton ?
+3.  Include Loops
+4.  Make Z3 Expressions while parsing. 
+
+
+
+
 
 
 
