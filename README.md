@@ -32,6 +32,28 @@ $ ~run
 
 ![Parse-Tree](https://github.com/codersguild/parser-symbolic-exec/blob/master/code/src/main/scala/parser/grammar/grammar.png)
 
+###  Sample Output 
+
+We pass ```simple.simpl``` file to  our lexer-parser and run parsing to generate constraints as per
+```assert``` statements. ```Conditional Statements``` not covered yet. 
+
+```Z3```  run on dummy constraints using ```scala z3 api``` .  See function ```ExampleZ3Solving()```
+in ```parser.scala```.
+
+```bash
+    [warn] three warnings found
+    [info] running Main ./samples/simple.simpl
+    Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
+    AssertRule : (id: x) (relop: >) (condexpr: y)
+    AssertRule : (id: z) (relop: >) (condexpr: b)
+    Print : (evalprintrec: x+20+5*y) : 39600
+    Print : (evalprintrec: y) : 7898
+    Print : (evalprintrec: z) : 27717
+    Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool)
+    Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1)
+    sat
+```
+
 
 
 

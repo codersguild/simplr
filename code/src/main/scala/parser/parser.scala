@@ -11,27 +11,28 @@ object parser {
     val domain = Map[String, String]()
     val deltaValues = Map[String, Int]()
 
-    def z3Solving () {
+    def Examplez3Solving () {
         val ctx: Context = new Context(new java.util.HashMap[String, String])  
 
-        val a: BoolExpr = ctx.mkBoolConst("a")
-        val b: BoolExpr = ctx.mkBoolConst("b")
-        val c: BoolExpr = ctx.mkBoolConst("c")
-
-        val formula: BoolExpr = ctx.mkAnd(ctx.mkOr(a, b), c)
+        val x : IntExpr = ctx.mkIntConst("x")
+        val y : IntExpr = ctx.mkIntConst("y")
+        val num : Expr =  ctx.mkNumeral(50, ctx.mkIntSort())
+        val res : Expr =  ctx.mkNumeral(100, ctx.mkIntSort())
+        val z : ArithExpr = ctx.mkAdd(x, y)
+        val formula2 : BoolExpr = ctx.mkEq(x, num)
+        val formula3 : BoolExpr = ctx.mkEq(y, num)
+        val formula1 : BoolExpr = ctx.mkEq(z, res)
         val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
 
-        solver.add(formula)                                    
+        solver.add(formula2)   
+        solver.add(formula1)
+        solver.add(formula3)
+
         if(solver.check == Status.SATISFIABLE)                 
         {
-            val model: Model = solver.getModel                   
-            val resultVa: Expr = model.eval(a, false)             
-            val resultVb: Expr = model.eval(b, false)
-            val resultVc: Expr = model.eval(c, false)
-
-            println(resultVa)   
-            println(resultVb)   
-            println(resultVc)   
+            println("sat")
+        } else  {
+            println("unsat")
         }
     }
 
