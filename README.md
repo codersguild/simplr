@@ -15,7 +15,7 @@ $ cd code
 $ sbt
 (wait for build to complete...)
 
-$ ~run 
+$ ~run ./samples/simple.simpl
 ```
 
  ```~```  for re-run on file changes. 
