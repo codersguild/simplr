@@ -1,5 +1,6 @@
 import reader._
 import parser._
+import z3sol._
 
 object Main extends App {
     
@@ -9,7 +10,7 @@ object Main extends App {
     println("Domain : " + parser.domain)
     println("Delta : " + parser.deltaValues)
 
-    parser.Examplez3Solving ()
+    z3sol.Z3Solver ()
 
 }
 

@@ -2,40 +2,14 @@ package parser
 
 import scala.collection.mutable._
 import org.antlr.v4.runtime._
-import com.microsoft.z3._
-import scala.io._
+import z3sol._
 import simpl._
 
 object parser {
     
     val domain = Map[String, String]()
     val deltaValues = Map[String, Int]()
-
-    def Examplez3Solving () {
-        val ctx: Context = new Context(new java.util.HashMap[String, String])  
-
-        val x : IntExpr = ctx.mkIntConst("x")
-        val y : IntExpr = ctx.mkIntConst("y")
-        val num : Expr =  ctx.mkNumeral(50, ctx.mkIntSort())
-        val res : Expr =  ctx.mkNumeral(100, ctx.mkIntSort())
-        val z : ArithExpr = ctx.mkAdd(x, y)
-        val formula2 : BoolExpr = ctx.mkEq(x, num)
-        val formula3 : BoolExpr = ctx.mkEq(y, num)
-        val formula1 : BoolExpr = ctx.mkEq(z, res)
-        val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
-
-        solver.add(formula2)   
-        solver.add(formula1)
-        solver.add(formula3)
-
-        if(solver.check == Status.SATISFIABLE)                 
-        {
-            println("sat")
-        } else  {
-            println("unsat")
-        }
-    }
-
+    
     def evalfunction (x : Int, y : Int, op : String) : Int = op match {
         case "+" => return x + y
         case "-" => return x - y
@@ -110,6 +84,7 @@ object parser {
             var ident = visitIdentifier(ctx.left)
             domain(ident) = ctx.typ.getText.toString
             deltaValues(ident) = expr.toInt
+            z3sol.Z3AddConstraints(ident, expr.toInt)
             return s"$ident = $expr"
         }
 
