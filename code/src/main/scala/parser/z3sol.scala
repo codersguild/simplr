@@ -57,6 +57,22 @@ object z3sol {
         }
     }
 
+
+    // def ExampleZ3v2() {
+    //     val x : IntExpr = ctx.mkIntConst("x")
+    //     val y : IntExpr = ctx.mkIntConst("y")
+    //     val x_plus_1 = ckt.mkAdd(x, ctk.mkNumeral(1, ctx.mkIntSort()))
+    //     val y_eq_x_plus_1 = 
+    // }
+    // def convert(e : Expr) : z3.Expr = {
+    //     e match {
+    //         case PlusOp(e1, e2) =>
+    //           z1 = convert(e1)
+    //           z2 = convert(e2)
+    //           ctx.mkAdd(z1, z2)
+    //     }
+    // }
+
     def Examplez3Solving () {
        
         val x : IntExpr = ctx.mkIntConst("x")

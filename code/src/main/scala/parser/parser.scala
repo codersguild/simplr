@@ -36,35 +36,41 @@ object parser {
     case class operation (operator : String) extends expression
     case class evalresult (result : Option[Int]) extends expression
     
-    class SimplExprVisitorParsing extends simplBaseVisitor[String] {
+    abstract class ResultType
+    case object NoResult extends ResultType
+    case class IntResult(v : Int) extends ResultType
+    case class BoolResult(v : Boolean) extends ResultType
 
-        override def visitStatement (ctx : simplParser.StatementContext) : String = {
+    class SimplExprVisitorParsing extends simplBaseVisitor[Option[(ResultType, String)]] {
+        type R = (ResultType, String)
+
+        override def visitStatement (ctx : simplParser.StatementContext) : Option[R] = {
             if (ctx.decl != null) return visitDeclarationStatement(ctx.decl)
             if (ctx.asgn != null) return visitAssignmentStatement(ctx.asgn)
             if (ctx.cond != null) return visitConditionStatement(ctx.cond)
             if (ctx.asrt != null) return visitAssertStatement(ctx.asrt)
             if (ctx.prnt != null) return visitPrintStatement(ctx.prnt)
-            return ctx.getText.toString
+            return None
         }
 
-        override def visitAssertStatement (ctx : simplParser.AssertStatementContext) : String = {
+        override def visitAssertStatement (ctx : simplParser.AssertStatementContext) : Option[R] = {
             var ident = ctx.relexp.id.getText
             var rule = ctx.relexp.rel.getText
             var condl = ctx.relexp.exp.getText
             var res = visitExpression(ctx.relexp.exp)
-            z3sol.Z3AddConstraints(ident, res.toInt, rule)
+            z3sol.Z3AddConstraints(ident, res.get._1.asInstanceOf[IntResult].v, rule)
             println(s"AssertRule : (id: $ident) (relop: $rule) (condexpr: $condl) (result : $res)")
-            return ctx.getText.toString
+            return None
         }
 
-        override def visitPrintStatement (ctx : simplParser.PrintStatementContext) : String = {
+        override def visitPrintStatement (ctx : simplParser.PrintStatementContext) : Option[R] = {
             var printexpr = ctx.printexp.getText
-            var result = visitExpression(ctx.printexp)
+            var result = visitExpression(ctx.printexp).get._1.asInstanceOf[IntResult].toString
             println(s"Print : (evalprintrec: $printexpr) : $result")
-            return ctx.getText.toString
+            return Some((NoResult, result))
         }
 
-        override def visitConditionStatement (ctx : simplParser.ConditionStatementContext) : String = {
+        override def visitConditionStatement (ctx : simplParser.ConditionStatementContext) : Option[R] = {
             var ident = ctx.relexp.id.getText
             var rule = ctx.relexp.rel.getText
             var condl = ctx.relexp.exp.getText
@@ -72,45 +78,44 @@ object parser {
             var falsebranch =  ctx.falsestat.getText
             // z3sol.Z3AddConstraints(ident, deltaValues(condl.toString), rule)
             println(s"Conditional : (fullcondlexpr : $ident $rule $condl) ? (true) {$truebranch} : (false) ($falsebranch)") 
-            return ctx.getText.toString
+            // TODO
+            return None
         }
 
-        override def visitDeclarationStatement (ctx : simplParser.DeclarationStatementContext) : String = {
+        override def visitDeclarationStatement (ctx : simplParser.DeclarationStatementContext) : Option[R] = {
             val ident = ctx.id.getText.toString
             domain(ident) = ctx.typ.getText.toString
             deltaValues(ident) = 0; // zero-initalized by default 
             z3sol.Z3AddConstraints(ident, 0, "assign")
-            return ident;
+            return None
         }
 
-        override def visitAssignmentStatement (ctx : simplParser.AssignmentStatementContext) : String = {
+        override def visitAssignmentStatement (ctx : simplParser.AssignmentStatementContext) : Option[R] = {
             var expr = visitExpression(ctx.right)
             var ident = visitIdentifier(ctx.left)
-            domain(ident) = ctx.typ.getText.toString
-            deltaValues(ident) = expr.toInt
-            z3sol.Z3AddConstraints(ident, expr.toInt, "assign")
-            return s"$ident = $expr"
+            domain(ctx.left.getText.toString) = ctx.typ.getText.toString
+            deltaValues(ctx.left.getText.toString) = expr.get._1.asInstanceOf[IntResult].v
+            z3sol.Z3AddConstraints(ctx.left.getText.toString, expr.get._1.asInstanceOf[IntResult].v, "assign")
+            return None
         }
 
-        override def visitIdentifier (ctx : simplParser.IdentifierContext) : String = {
+        override def visitIdentifier (ctx : simplParser.IdentifierContext) : Option[R] = {
             val ident = ctx.getText.toString
             deltaValues(ident) = 0 // zero-initalized by default 
-            return ident
+            return None
         }
 
-        override def visitExpression (ctx : simplParser.ExpressionContext) : String = {
+        override def visitExpression (ctx : simplParser.ExpressionContext) : Option[R] = {
             
-            var left = ""
-            var right = "" 
+            var left : Option[R] = None
+            var right : Option[R] = None
             var operator = ""
-            var expr = ""
 
             if (ctx.left != null && ctx.right != null) {
                 operator = ctx.op.getText
                 left = visitExpression(ctx.left)
                 right = visitExpression(ctx.right)
-                var tempexpr = evalfunction(left.toInt, right.toInt, operator);
-                return tempexpr.toString
+                return Some((IntResult(evalfunction(left.get._1.asInstanceOf[IntResult].v, right.get._1.asInstanceOf[IntResult].v, operator)), ""));
             }
 
             if(ctx.left != null)  
@@ -123,12 +128,12 @@ object parser {
                     return visitExpression(ctx.main_expr)
                 else {
                     if (ctx.num != null)
-                        return ctx.num.getText
+                        return Some((IntResult(ctx.num.getText.toInt),""))
                     if (ctx.varl != null)
-                        return deltaValues(ctx.varl.getText).toString
+                        return Some((IntResult(deltaValues(ctx.varl.getText)),""))
                 }
             }
-            return expr
+            return None
         }
 
     }
