@@ -40,30 +40,6 @@ We pass ```simple.simpl``` file to  our lexer-parser and run parsing to generate
 ```Z3```  run on dummy constraints using ```scala z3 api``` .  See function ```ExampleZ3Solving()```
 in ```parser.scala```.
 
-```bash
-    AssignRuleAdded
-    AssignRuleAdded
-    AssignRuleAdded
-    AssignRuleAdded
-    AssignRuleAdded
-    AssignRuleAdded
-    Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
-    line 1:13 missing ';' at '<EOF>'
-    GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: x) (result : 90)
-    GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: b) (result : 0)
-    Print : (evalprintrec: x+20+5*y) : 39600
-    Print : (evalprintrec: y) : 7898
-    Print : (evalprintrec: z) : 27717
-    line 1:18 missing ';' at '<EOF>'
-    GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: y+62) (result : 7960)
-    Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool)
-    Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1)
-    sat
-```
-
 For ```simple.simpl``` file program. 
 
 ```bash 
@@ -76,23 +52,25 @@ For ```simple.simpl``` file program.
     AssignRuleAdded
     Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
     GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: x) (result : 90)
+    AssertRule : (id: z) (relop: >) (condexpr: x) (result : Some((IntResult(90),)))
     GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: b) (result : 0)
-    Print : (evalprintrec: x+20+5*y) : 39600
-    Print : (evalprintrec: y) : 7898
-    Print : (evalprintrec: z) : 27717
+    AssertRule : (id: z) (relop: >) (condexpr: b) (result : Some((IntResult(0),)))
+    Print : (evalprintrec: x+20+5*y) : IntResult(39600)
+    Print : (evalprintrec: y) : IntResult(7898)
+    Print : (evalprintrec: z) : IntResult(27717)
     GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: y*54-67*x) (result : 420462)
+    AssertRule : (id: z) (relop: >) (condexpr: y*54-67*x) (result : Some((IntResult(420462),)))
     GreaterThanRuleAdded
-    AssertRule : (id: y) (relop: >) (condexpr: z/50+62) (result : 616)
+    AssertRule : (id: y) (relop: >) (condexpr: z/50+62) (result : Some((IntResult(616),)))
     AssignRuleAdded
-    Print : (evalprintrec: x-a+b-y+z*78) : 2154118
+    Print : (evalprintrec: x-a+b-y+z*78) : IntResult(2154118)
     GreaterThanRuleAdded
-    AssertRule : (id: x) (relop: >) (condexpr: z*y) (result : 218908866)
+    AssertRule : (id: x) (relop: >) (condexpr: z*y) (result : Some((IntResult(218908866),)))
     Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool, n -> bool)
     Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1, n -> 0)
-    unsat
+    SATISFIABLE : no/unsat
+    [success] Total time: 1 s, completed 25-Dec-2019, 10:51:59 pm
+
 ``` 
 
 ### TO-DO
@@ -104,6 +82,12 @@ For ```simple.simpl``` file program.
 5.  Make Z3 Expressions while parsing. 
 6.  Make ANTRL4 Visitor parser do annotations and semantic analysis.
 7.  Printing the Z3 Model. 
+
+### Working
+
+1.  SCALA Based AST
+2.  New Grammar definition for functions.
+
 
 
 
