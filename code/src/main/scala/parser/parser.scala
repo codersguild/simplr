@@ -115,7 +115,8 @@ object parser {
                 operator = ctx.op.getText
                 left = visitExpression(ctx.left)
                 right = visitExpression(ctx.right)
-                return Some((IntResult(evalfunction(left.get._1.asInstanceOf[IntResult].v, right.get._1.asInstanceOf[IntResult].v, operator)), ""));
+                return Some((IntResult(evalfunction(left.get._1.asInstanceOf[IntResult].v, 
+                                                    right.get._1.asInstanceOf[IntResult].v, operator)), ""));
             }
 
             if(ctx.left != null)  
