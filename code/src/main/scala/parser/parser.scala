@@ -74,9 +74,9 @@ object parser {
             var ident = ctx.relexp.id.getText
             var rule = ctx.relexp.rel.getText
             var condl = ctx.relexp.exp.getText
-            var truebranch = ctx.truestat.getText // What to visit false or true. 
+            var truebranch = ctx.truestat.getText 
             var falsebranch =  ctx.falsestat.getText
-            // z3sol.Z3AddConstraints(ident, deltaValues(condl.toString), rule)
+            z3sol.Z3AddConstraints(ident, res.get._1.asInstanceOf[IntResult].v, rule) // Check condition result. 
             println(s"Conditional : (fullcondlexpr : $ident $rule $condl) ? (true) {$truebranch} : (false) ($falsebranch)") 
             // TODO
             return None
