@@ -12,7 +12,7 @@ scalaVersion := "2.13.1"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "lang-parser"
+name := "simpl"
 organization := "cse.iitk.ac.in"
 version := "1.0.0"
 
@@ -27,7 +27,9 @@ libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
 
 libraryDependencies ++= Seq(
   "org.antlr" % "antlr4-runtime" % "4.7.1",
-  "org.antlr" % "stringtemplate" % "3.2"
+  "org.antlr" % "stringtemplate" % "3.2",
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
+  "com.lihaoyi" %% "fastparse" % "2.2.2"
 )
 
 Compile / unmanagedJars += {

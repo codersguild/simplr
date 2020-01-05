@@ -7,7 +7,7 @@ import simpl._
 
 object parser {
     
-    val domain = Map[String, String]()
+    val domain = Map[String, String]()                                                            
     val deltaValues = Map[String, Int]()
 
     def evalfunction (x : Int, y : Int, op : String) : Int = op match {
@@ -76,16 +76,17 @@ object parser {
             var condl = ctx.relexp.exp.getText
             var truebranch = ctx.truestat.getText 
             var falsebranch =  ctx.falsestat.getText
+            var res = visitExpression(ctx.relexp.exp)
             z3sol.Z3AddConstraints(ident, res.get._1.asInstanceOf[IntResult].v, rule) // Check condition result. 
             println(s"Conditional : (fullcondlexpr : $ident $rule $condl) ? (true) {$truebranch} : (false) ($falsebranch)") 
-            // TODO
+            // TODO history 
             return None
         }
 
         override def visitDeclarationStatement (ctx : simplParser.DeclarationStatementContext) : Option[R] = {
             val ident = ctx.id.getText.toString
             domain(ident) = ctx.typ.getText.toString
-            deltaValues(ident) = 0; // zero-initalized by default 
+            deltaValues(ident) = 0; // zero by default 
             z3sol.Z3AddConstraints(ident, 0, "assign")
             return None
         }
@@ -96,12 +97,13 @@ object parser {
             domain(ctx.left.getText.toString) = ctx.typ.getText.toString
             deltaValues(ctx.left.getText.toString) = expr.get._1.asInstanceOf[IntResult].v
             z3sol.Z3AddConstraints(ctx.left.getText.toString, expr.get._1.asInstanceOf[IntResult].v, "assign")
+            
             return None
         }
 
         override def visitIdentifier (ctx : simplParser.IdentifierContext) : Option[R] = {
             val ident = ctx.getText.toString
-            deltaValues(ident) = 0 // zero-initalized by default 
+            deltaValues(ident) = 0 // zero by default 
             return None
         }
 

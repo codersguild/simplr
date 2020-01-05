@@ -1,4 +1,4 @@
-// Generated from /home/virtualvms/Documents/Research/parser-symbolic-exec/code/src/main/scala/parser/grammar/simpl.g4 by ANTLR 4.7.1
+// Generated from /home/virtualvms/Documents/Research/parser-symbolic-exec/simpl/src/main/scala/parser/grammar/simpl.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
