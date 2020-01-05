@@ -129,10 +129,12 @@ class AbstactSyntaxTreeVisitor {
             }
 
             case FunctionStatement(function, params, functionBlock) => {
+                // TODO Implement FunctionStatement()
                 return None
             }
 
             case ReturnStatement(returnval) => {
+                // TODO Implement ReturnStatement()
                 return None
             }
 
@@ -150,6 +152,7 @@ class AbstactSyntaxTreeVisitor {
             }
 
             case RelOpExpression(expr1, op, expr2) => {
+                // TODO Add Z3 expressions while eval happens
                 op match  {
                     case "<" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v < 
                                                         visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
