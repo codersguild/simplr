@@ -52,6 +52,7 @@ class ParserRules extends LexerRules with PackratParsers {
     }
 
     lazy val factor : PackratParser[simplExpression] = constant | variable | lparen ~> expr <~ rparen 
+    
     lazy val constant : PackratParser[simplExpression] = number | bool  
 
     lazy val number : PackratParser[NumericExpression] = {

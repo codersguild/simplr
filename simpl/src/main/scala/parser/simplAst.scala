@@ -1,16 +1,15 @@
 package ast
-
+import z3sol._
 import scala.util.parsing._
 import scala.collection.mutable._
-import z3sol._
 
-sealed trait AbstactSyntaxTree 
-
-abstract class ResultType
+sealed trait ResultType
 case object NoResult extends ResultType
 case class IntResult(v : Int) extends ResultType
 case class BoolResult(v : Boolean) extends ResultType
 case class StringResult(v : String) extends ResultType
+
+sealed trait AbstactSyntaxTree 
 
 trait simplExpression extends AbstactSyntaxTree {
     def value : ResultType
@@ -69,10 +68,15 @@ case class DeclarationStatement(decltype : String, declname : simplVariable) ext
 case class AssignmentStatement(lhs : simplVariable, rhs : simplExpression) extends Statement
 case class PrintStatement(printexpr : simplExpression) extends Statement
 case class AssertStatement(assertrule : simplExpression) extends Statement
-case class ConditionalStatement(condl : simplExpression, truebranch : List[Statement], falsebranch : List[Statement]) extends Statement
-case class FunctionStatement(function : String, params : List[simplDeclaration], functionBlock : List[Statement]) extends Statement
+case class ConditionalStatement(    condl : simplExpression, 
+                                    truebranch : List[Statement], 
+                                    falsebranch : List[Statement]) extends Statement
+case class FunctionStatement(   function : String, 
+                                params : List[simplDeclaration], 
+                                functionBlock : List[Statement]) extends Statement
 case class ReturnStatement(returnval : simplExpression) extends Statement
 
+/* For storing program enviroment and evaluation results for program states */
 class ProgramState {
     val domain = Map[String, String]()                                                            
     val deltaValues = Map[String, Int]()
@@ -80,7 +84,8 @@ class ProgramState {
     val symbols = Set[String]()
 }
 
-class AbstactSyntaxTreeVisitor {
+/* AST Evaluator */
+class AbstactSyntaxTreeVisitor  {
     def visitorEval(abstractSynataxTree : AbstactSyntaxTree, programState : ProgramState) : Option[(ResultType)] = {
         abstractSynataxTree match  {
             

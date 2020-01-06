@@ -1,6 +1,7 @@
 package tokens
-
 import scala.util.parsing._
+
+/* Lexical Analysis Stage Processing. */
 
 sealed trait simplTokens
 
