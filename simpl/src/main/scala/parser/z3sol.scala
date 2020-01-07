@@ -65,14 +65,21 @@ object z3sol {
         
     }
 
-    def Z3Solver () {
-        println("\nNo of Z3 Assertions : " + solver.getNumAssertions())
-        z3Constraints.foreach(println)
+    def Z3Solver() : String = {
+
         if(solver.check == Status.SATISFIABLE) {
-            println("\nSatisfiable !\n")
+            return "SAT"
         } else  {
-            println("\nNot Satisfiable\n")
+            return "UNSAT"
         }
+    }
+
+    def Z3GetAssertionSize() : Int = {
+        return solver.getNumAssertions()
+    }
+
+    def Z3GetModelEquations() : Set[String] = {
+        return z3Constraints
     }
 
     // def Examplez3Solving () {

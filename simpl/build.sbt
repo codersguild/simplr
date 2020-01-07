@@ -23,7 +23,9 @@ version := "1.0.0"
 
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+// libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.0"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test"
 
 libraryDependencies ++= Seq(
   "org.antlr" % "antlr4-runtime" % "4.7.1",
