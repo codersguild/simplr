@@ -28,5 +28,7 @@ object Main extends App {
             }
         }
     }
+
+    z3sol.Z3Solver ()
 }
 

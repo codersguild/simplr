@@ -44,6 +44,11 @@ object z3sol {
                 _formula = ctx.mkLe(_id, _expr.asInstanceOf[ArithExpr])
                 println("LessThanEqualRuleAdded")
             }
+
+            case "!=" => {
+                _formula = ctx.mkNot( ctx.mkEq(_id, _expr.asInstanceOf[ArithExpr]) )
+                println("NotEqualRuleAdded")
+            }
         }
 
         solver.add(_formula)

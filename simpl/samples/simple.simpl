@@ -5,14 +5,15 @@ int b;
 bool m = true;
 int z = 800 + 45 * (x + y / 25) + 899 - (x - y + 45 / 3);
 assert(z > x);
-assert(z > b);
+assert(z < b);
 print(x + 20 + 5 * y);
 if (x > b) { print(x); print(b + 23); } else { print(b); assert(x > 588); }
 print(y);
 print(z);
-assert(z > y * 54 - 67 * x);
-assert(y > z / 50 + 62);
+assert(z != y * 54 - 67 * x);
+assert(y != z / 50 + 62);
 bool n = false;
 print(x - a + b - y + z * 78);
-assert(x > z * y);
+assert(x < z * y);
 print(z - b + x);
+

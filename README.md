@@ -8,7 +8,7 @@ using scala, z3, ANTLR4 and LLVM.
 
 ### Run
 
-Folder ```code``` is the base folder for all scala code. 
+Folder ```simpl``` is the base folder for all scala code. 
 
 ```
 $ cd code
@@ -43,50 +43,44 @@ in ```parser.scala```.
 For ```simple.simpl``` file program. 
 
 ```bash 
-    [info] running Main ./samples/simple.simpl
+    Assign : x = 90
     AssignRuleAdded
+    Assign : y = 7898
     AssignRuleAdded
+    Assign : m = 1
     AssignRuleAdded
+    Assign : z = 27717
     AssignRuleAdded
-    AssignRuleAdded
-    AssignRuleAdded
-    Conditional : (fullcondlexpr : x > y) ? (true) {x=90;} : (false) (x=z-y;)
     GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: x) (result : Some((IntResult(90),)))
+    LessThanRuleAdded
+    Print : 39600
     GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: b) (result : Some((IntResult(0),)))
-    Print : (evalprintrec: x+20+5*y) : IntResult(39600)
-    Print : (evalprintrec: y) : IntResult(7898)
-    Print : (evalprintrec: z) : IntResult(27717)
-    GreaterThanRuleAdded
-    AssertRule : (id: z) (relop: >) (condexpr: y*54-67*x) (result : Some((IntResult(420462),)))
-    GreaterThanRuleAdded
-    AssertRule : (id: y) (relop: >) (condexpr: z/50+62) (result : Some((IntResult(616),)))
+    Print : 90
+    Print : 23
+    Print : 7898
+    Print : 27717
+    NotEqualRuleAdded
+    NotEqualRuleAdded
+    Assign : n = 0
     AssignRuleAdded
-    Print : (evalprintrec: x-a+b-y+z*78) : IntResult(2154118)
-    GreaterThanRuleAdded
-    AssertRule : (id: x) (relop: >) (condexpr: z*y) (result : Some((IntResult(218908866),)))
-    Domain : HashMap(a -> int, b -> int, x -> int, y -> int, z -> int, m -> bool, n -> bool)
-    Delta : HashMap(a -> 0, b -> 0, x -> 90, y -> 7898, z -> 27717, m -> 1, n -> 0)
+    Print : 2154118
+    LessThanRuleAdded
+    Print : 27807
     SATISFIABLE : no/unsat
-    [success] Total time: 1 s, completed 25-Dec-2019, 10:51:59 pm
-
 ``` 
 
 ### TO-DO
 
-1.  How to process branch statements/conditionals ?
-2.  Check for variable redeclaration and redefiniton ?
-3.  Add Support for boolean expressions.
-4.  Include Loops
-5.  Make Z3 Expressions while parsing. 
-6.  Make ANTRL4 Visitor parser do annotations and semantic analysis.
-7.  Printing the Z3 Model. 
+1. Convert the processing into passes. 
+2. Check and Print Z3 Model.
+3. Handle Function Calls. 
+4. Improve the token matching. 
 
 ### Working
 
-1.  SCALA Based AST
-2.  New Grammar definition for functions.
+1.  Z3 Modelling. 
+2.  New Grammar definition for functions & multi-line block statements.
+3. Fix Z3 Linking errors. 
 
 
 

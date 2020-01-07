@@ -46,7 +46,7 @@ case class BoolExpression(boolValue : String) extends simplExpression {
     def value = BoolResult(boolValue.toBoolean)
 }
 
-case class RelOpExpression(expr1: simplExpression, relOp : String, expr2: simplExpression) extends simplExpression {
+case class RelOpExpression(expr1: simplVariable, relOp : String, expr2: simplExpression) extends simplExpression {
     def value = relOp match {
         case ">" => BoolResult( expr1.value.asInstanceOf[IntResult].v > 
                                     expr2.value.asInstanceOf[IntResult].v)
@@ -99,20 +99,19 @@ class AbstactSyntaxTreeVisitor  {
                 val assignedValue = visitorEval(rhs, programState).get.asInstanceOf[IntResult].v
                 val name = lhs.variableName
                 programState.deltaValues(name) = assignedValue
-                println(s"$name = $assignedValue")
-                // TODO ADD CONSTRAINT to z3 Solver
+                println(s"Assign : $name = $assignedValue")
+                z3sol.Z3AddConstraints(lhs.symbol, assignedValue, "assign")
                 return None
             }
             
             case PrintStatement(printexpr) => {
                 val printresult = visitorEval(printexpr, programState).get.asInstanceOf[IntResult].v
-                println(printresult)
+                println(s"Print : $printresult")
                 return None
             }
             
             case AssertStatement(assertrule) => {
                 val assertEvalValue = visitorEval(assertrule, programState).get.asInstanceOf[BoolResult].v
-                // TODO ADD CONSTRAINT to z3 Solver
                 return None
             }
 
@@ -157,7 +156,9 @@ class AbstactSyntaxTreeVisitor  {
             }
 
             case RelOpExpression(expr1, op, expr2) => {
-                // TODO Add Z3 expressions while eval happens
+                z3sol.Z3AddConstraints( expr1.symbol,
+                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v, 
+                                        op)
                 op match  {
                     case "<" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v < 
                                                         visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
