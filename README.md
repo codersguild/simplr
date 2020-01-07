@@ -43,30 +43,44 @@ in ```parser.scala```.
 For ```simple.simpl``` file program. 
 
 ```bash 
-    Assign : x = 90
-    AssignRuleAdded
-    Assign : y = 7898
-    AssignRuleAdded
-    Assign : m = 1
-    AssignRuleAdded
-    Assign : z = 27717
-    AssignRuleAdded
-    GreaterThanRuleAdded
-    LessThanRuleAdded
-    Print : 39600
-    GreaterThanRuleAdded
-    Print : 90
-    Print : 23
-    Print : 7898
-    Print : 27717
-    NotEqualRuleAdded
-    NotEqualRuleAdded
-    Assign : n = 0
-    AssignRuleAdded
-    Print : 2154118
-    LessThanRuleAdded
-    Print : 27807
-    SATISFIABLE : no/unsat
+        Assign : x = 90
+        AssignRuleAdded
+        Assign : y = 7898
+        AssignRuleAdded
+        Assign : m = 1
+        AssignRuleAdded
+        Assign : z = 27717
+        AssignRuleAdded
+        GreaterThanRuleAdded
+        LessThanRuleAdded
+        Print : 39600
+        GreaterThanRuleAdded
+        Print : 90
+        Print : 23
+        Print : 7898
+        Print : 27717
+        NotEqualRuleAdded
+        NotEqualRuleAdded
+        Assign : n = 0
+        AssignRuleAdded
+        Print : 2154118
+        LessThanRuleAdded
+        Print : 7988
+
+        No of Z3 Assertions : 11
+        __m = 1
+        __x > 0
+        __z > 90
+        __n = 0
+        __z < 0
+        __x = 90
+        __z != 420462
+        __y != 616
+        __y = 7898
+        __z = 27717
+        __x < 218908866
+
+        Not Satisfiable
 ``` 
 
 ### TO-DO
@@ -81,14 +95,4 @@ For ```simple.simpl``` file program.
 1.  Z3 Modelling. 
 2.  New Grammar definition for functions & multi-line block statements.
 3. Fix Z3 Linking errors. 
-
-
-
-
-
-
-
-
-
-
-
+4. Add Z3 Symbolic Equations

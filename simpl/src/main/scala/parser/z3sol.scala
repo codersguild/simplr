@@ -1,104 +1,101 @@
 package z3sol
 
-import scala.collection.mutable._
 import com.microsoft.z3._
+import scala.collection.mutable._
 
 object z3sol {
     
     val ctx: Context = new Context(new java.util.HashMap[String, String])  
     val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
+    var z3Constraints = Set[String]() 
 
-    def Z3AddConstraints (id : String, value : Int, cond : String) {
+    def Z3AddConstraints (lhs : String, rhs : Int, condition : String) {
         
-        val _id :  IntExpr  = ctx.mkIntConst(id)
-        val _expr : Expr = ctx.mkNumeral(value, ctx.mkIntSort())
-        var _formula : BoolExpr = ctx.mkEq(_id, _expr)
-
-        cond match {
+        val lhsExpr :  IntExpr  = ctx.mkIntConst(lhs)
+        val rhsExpr : Expr = ctx.mkNumeral(rhs, ctx.mkIntSort())
+        var formula : BoolExpr = ctx.mkEq(lhsExpr, rhsExpr)
+        
+        condition match {
             case "assign" => {
-                _formula = ctx.mkEq(_id, _expr)
+                formula = ctx.mkEq(lhsExpr, rhsExpr)
+                z3Constraints += s"$lhsExpr = $rhsExpr"
                 println("AssignRuleAdded")
             }
             
             case "==" => {
-                _formula = ctx.mkEq(_id, _expr)
+                formula = ctx.mkEq(lhsExpr, rhsExpr)
+                z3Constraints += s"$lhsExpr == $rhsExpr"
                 println("EqualRuleAdded")
             }
 
             case ">" => {
-                _formula = ctx.mkGt(_id, _expr.asInstanceOf[ArithExpr])
+                formula = ctx.mkGt(lhsExpr, rhsExpr.asInstanceOf[ArithExpr])
+                z3Constraints += s"$lhsExpr > $rhsExpr"
                 println("GreaterThanRuleAdded")
             }
 
             case "<" => {
-                _formula = ctx.mkLt(_id, _expr.asInstanceOf[ArithExpr])
+                formula = ctx.mkLt(lhsExpr, rhsExpr.asInstanceOf[ArithExpr])
+                z3Constraints += s"$lhsExpr < $rhsExpr"
                 println("LessThanRuleAdded")
             }
 
             case ">=" => {
-                _formula = ctx.mkGe(_id, _expr.asInstanceOf[ArithExpr])
+                formula = ctx.mkGe(lhsExpr, rhsExpr.asInstanceOf[ArithExpr])
+                z3Constraints += s"$lhsExpr >= $rhsExpr"
                 println("GreaterThanEqualRuleAdded")
             }
 
             case "<=" => {
-                _formula = ctx.mkLe(_id, _expr.asInstanceOf[ArithExpr])
+                formula = ctx.mkLe(lhsExpr, rhsExpr.asInstanceOf[ArithExpr])
+                z3Constraints += s"$lhsExpr <= $rhsExpr"
                 println("LessThanEqualRuleAdded")
             }
 
             case "!=" => {
-                _formula = ctx.mkNot( ctx.mkEq(_id, _expr.asInstanceOf[ArithExpr]) )
+                formula = ctx.mkNot( ctx.mkEq(lhsExpr, rhsExpr.asInstanceOf[ArithExpr]) )
+                z3Constraints += s"$lhsExpr != $rhsExpr"
                 println("NotEqualRuleAdded")
             }
         }
-
-        solver.add(_formula)
+        solver.add(formula)
+    }
+    
+    def Z3AddSymbolicConstraints (lhs : String, rhs : String, relOp : String) {
+        
     }
 
     def Z3Solver () {
+        println("\nNo of Z3 Assertions : " + solver.getNumAssertions())
+        z3Constraints.foreach(println)
         if(solver.check == Status.SATISFIABLE) {
-            println("SATISFIABLE : yes/sat")
+            println("\nSatisfiable !\n")
         } else  {
-            println("SATISFIABLE : no/unsat")
+            println("\nNot Satisfiable\n")
         }
     }
 
-
-    // def ExampleZ3v2() {
+    // def Examplez3Solving () {
+       
     //     val x : IntExpr = ctx.mkIntConst("x")
     //     val y : IntExpr = ctx.mkIntConst("y")
-    //     val x_plus_1 = ckt.mkAdd(x, ctk.mkNumeral(1, ctx.mkIntSort()))
-    //     val y_eq_x_plus_1 = 
-    // }
-    // def convert(e : Expr) : z3.Expr = {
-    //     e match {
-    //         case PlusOp(e1, e2) =>
-    //           z1 = convert(e1)
-    //           z2 = convert(e2)
-    //           ctx.mkAdd(z1, z2)
+    //     val num : Expr =  ctx.mkNumeral(50, ctx.mkIntSort())
+    //     val res : Expr =  ctx.mkNumeral(100, ctx.mkIntSort())
+
+    //     val z : ArithExpr = ctx.mkAdd(x, y)
+    //     val formula2 : BoolExpr = ctx.mkEq(x, num)
+    //     val formula3 : BoolExpr = ctx.mkEq(y, num)
+    //     val formula1 : BoolExpr = ctx.mkEq(z, res)
+
+    //     val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
+    //     solver.add(formula2)   
+    //     solver.add(formula1)
+    //     solver.add(formula3)
+
+    //     if(solver.check == Status.SATISFIABLE) {
+    //         println("sat")
+    //     } else  {
+    //         println("unsat")
     //     }
     // }
-
-    def Examplez3Solving () {
-       
-        val x : IntExpr = ctx.mkIntConst("x")
-        val y : IntExpr = ctx.mkIntConst("y")
-        val num : Expr =  ctx.mkNumeral(50, ctx.mkIntSort())
-        val res : Expr =  ctx.mkNumeral(100, ctx.mkIntSort())
-
-        val z : ArithExpr = ctx.mkAdd(x, y)
-        val formula2 : BoolExpr = ctx.mkEq(x, num)
-        val formula3 : BoolExpr = ctx.mkEq(y, num)
-        val formula1 : BoolExpr = ctx.mkEq(z, res)
-
-        val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
-        solver.add(formula2)   
-        solver.add(formula1)
-        solver.add(formula3)
-
-        if(solver.check == Status.SATISFIABLE) {
-            println("sat")
-        } else  {
-            println("unsat")
-        }
-    }
 }

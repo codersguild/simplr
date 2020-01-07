@@ -156,22 +156,15 @@ class AbstactSyntaxTreeVisitor  {
             }
 
             case RelOpExpression(expr1, op, expr2) => {
-                z3sol.Z3AddConstraints( expr1.symbol,
-                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v, 
-                                        op)
+                var expr_2 = visitorEval(expr2, programState).get.asInstanceOf[IntResult].v
+                z3sol.Z3AddConstraints( expr1.symbol, expr_2, op)
                 op match  {
-                    case "<" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v < 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case ">" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v > 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case "<=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v <= 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case ">=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v >= 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v)))
-                    case "==" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v == 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case "!=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v !=
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
+                    case "<" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v < expr_2))) 
+                    case ">" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v > expr_2))) 
+                    case "<=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v <= expr_2))) 
+                    case ">=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v >= expr_2)))
+                    case "==" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v == expr_2))) 
+                    case "!=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v != expr_2))) 
                 }
             }
 

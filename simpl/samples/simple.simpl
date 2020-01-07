@@ -15,5 +15,4 @@ assert(y != z / 50 + 62);
 bool n = false;
 print(x - a + b - y + z * 78);
 assert(x < z * y);
-print(z - b + x);
-
+print(x + y - b);
