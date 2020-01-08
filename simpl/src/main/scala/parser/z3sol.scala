@@ -9,6 +9,7 @@ object z3sol {
     val solver: com.microsoft.z3.Solver = ctx.mkSolver()   
     var z3Constraints = Set[String]() 
 
+    // TODO Symbolic Z3 Expressions
     def Z3AddConstraints (lhs : String, rhs : Int, condition : String) {
         
         val lhsExpr :  IntExpr  = ctx.mkIntConst(lhs)
@@ -61,6 +62,8 @@ object z3sol {
         solver.add(formula)
     }
     
+    // TODO Z3 Symbols added and on assert eval. 
+    // TODO If statements (pc and cond) and (pc' and not-cond)
     def Z3AddSymbolicConstraints (lhs : String, rhs : String, relOp : String) {
         
     }

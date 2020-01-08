@@ -21,10 +21,12 @@ case class simplVariable (variable : String) extends simplExpression {
     def value = IntResult(0)
 }
 
+// TODO extends AbstractSyntaxTree
 case class simplDeclaration (ardgdecltype : String, argdeclname : String) extends simplExpression {
     def value = StringResult(argdeclname)
 }
 
+// TODO Symbolic z3 Expressions mkAdd, mkSub ..
 case class ArithExpression(expr1 : simplExpression, arithOp : String, expr2 : simplExpression ) extends simplExpression {
     def value = arithOp match {
         case "+" => IntResult( expr1.value.asInstanceOf[IntResult].v + 
@@ -76,13 +78,18 @@ case class FunctionStatement(   function : String,
                                 functionBlock : List[Statement]) extends Statement
 case class ReturnStatement(returnval : simplExpression) extends Statement
 
-/* For storing program enviroment and evaluation results for program states */
+// TODO Notion of a Program state which stores execution stack as well.
+
+/* For storing program environment and evaluation results for program states */
 class ProgramState {
     val domain = Map[String, String]()                                                            
     val deltaValues = Map[String, Int]()
     val callStackStrings = List[String]()
     val symbols = Set[String]()
 }
+
+// TODO Make variable eval seperate. Statements have state transition. 
+// TODO ExprToZ3expr() function. Stores to a map and program state.
 
 /* AST Evaluator */
 class AbstactSyntaxTreeVisitor  {

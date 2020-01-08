@@ -79,7 +79,6 @@ object parser {
             var res = visitExpression(ctx.relexp.exp)
             z3sol.Z3AddConstraints(ident, res.get._1.asInstanceOf[IntResult].v, rule) // Check condition result. 
             println(s"Conditional : (fullcondlexpr : $ident $rule $condl) ? (true) {$truebranch} : (false) ($falsebranch)") 
-            // TODO history 
             return None
         }
 
