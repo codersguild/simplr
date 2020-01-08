@@ -10,5 +10,3 @@ before_script:
 
 script:
           sbt update
-          sbt test:compile
-          sbt test
