@@ -26,7 +26,8 @@ case class simplDeclaration (ardgdecltype : String, argdeclname : String) extend
     def value = StringResult(argdeclname)
 }
 
-// TODO Symbolic z3 Expressions mkAdd, mkSub ..
+// TODO Symbolic z3 Expressions mkAdd, mkSub.
+// TODO ArithExpression may throw error in case of StringResult.
 case class ArithExpression(expr1 : simplExpression, arithOp : String, expr2 : simplExpression ) extends simplExpression {
     def value = arithOp match {
         case "+" => IntResult( expr1.value.asInstanceOf[IntResult].v + 
@@ -92,8 +93,8 @@ class ProgramState {
 // TODO ExprToZ3expr() function. Stores to a map and program state.
 
 /* AST Evaluator */
-class AbstactSyntaxTreeVisitor  {
-    def visitorEval(abstractSynataxTree : AbstactSyntaxTree, programState : ProgramState) : Option[(ResultType)] = {
+class AbstactSyntaxTreeEval  {
+    def Evalfunction(abstractSynataxTree : AbstactSyntaxTree, programState : ProgramState) : Option[(ResultType)] = {
         abstractSynataxTree match  {
             
             case DeclarationStatement(decltype, declname) => {
@@ -103,36 +104,38 @@ class AbstactSyntaxTreeVisitor  {
             }
             
             case AssignmentStatement(lhs, rhs) => {
-                val assignedValue = visitorEval(rhs, programState).get.asInstanceOf[IntResult].v
+                val assignedValue = Evalfunction(rhs, programState).get.asInstanceOf[IntResult].v
                 val name = lhs.variableName
                 programState.deltaValues(name) = assignedValue
                 println(s"Assign : $name = $assignedValue")
+
+                // TODO Handle reassignments to same var, z3 gives UNSAT result.
                 z3sol.Z3AddConstraints(lhs.symbol, assignedValue, "assign")
                 return None
             }
             
             case PrintStatement(printexpr) => {
-                val printresult = visitorEval(printexpr, programState).get.asInstanceOf[IntResult].v
+                val printresult = Evalfunction(printexpr, programState).get.asInstanceOf[IntResult].v
                 println(s"Print : $printresult")
                 return None
             }
             
             case AssertStatement(assertrule) => {
-                val assertEvalValue = visitorEval(assertrule, programState).get.asInstanceOf[BoolResult].v
+                val assertEvalValue = Evalfunction(assertrule, programState).get.asInstanceOf[BoolResult].v
                 return None
             }
 
             case ConditionalStatement(condl, truebranch, falsebranch) => {
-                var condition = visitorEval(condl, programState).get.asInstanceOf[BoolResult].v
+                var condition = Evalfunction(condl, programState).get.asInstanceOf[BoolResult].v
                 condition match {
                     case true => {
                         for(stmts <- truebranch) {
-                            visitorEval(stmts, programState)
+                            Evalfunction(stmts, programState)
                         }
                     }
                     case false => {
                         for(stmts <- falsebranch) {
-                            visitorEval(stmts, programState)
+                            Evalfunction(stmts, programState)
                         }
                     }
                 }
@@ -151,27 +154,27 @@ class AbstactSyntaxTreeVisitor  {
 
             case ArithExpression(expr1, op, expr2) => {
                 op match  {
-                    case "+" => return Some(IntResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v + 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case "-" => return Some(IntResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v - 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case "*" => return Some(IntResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v * 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
-                    case "/" => return Some(IntResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v / 
-                                                        visitorEval(expr2, programState).get.asInstanceOf[IntResult].v))) 
+                    case "+" => return Some(IntResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v + 
+                                                        Evalfunction(expr2, programState).get.asInstanceOf[IntResult].v))) 
+                    case "-" => return Some(IntResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v - 
+                                                        Evalfunction(expr2, programState).get.asInstanceOf[IntResult].v))) 
+                    case "*" => return Some(IntResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v * 
+                                                        Evalfunction(expr2, programState).get.asInstanceOf[IntResult].v))) 
+                    case "/" => return Some(IntResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v / 
+                                                        Evalfunction(expr2, programState).get.asInstanceOf[IntResult].v))) 
                 }
             }
 
             case RelOpExpression(expr1, op, expr2) => {
-                var expr_2 = visitorEval(expr2, programState).get.asInstanceOf[IntResult].v
+                var expr_2 = Evalfunction(expr2, programState).get.asInstanceOf[IntResult].v
                 z3sol.Z3AddConstraints( expr1.symbol, expr_2, op)
                 op match  {
-                    case "<" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v < expr_2))) 
-                    case ">" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v > expr_2))) 
-                    case "<=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v <= expr_2))) 
-                    case ">=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v >= expr_2)))
-                    case "==" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v == expr_2))) 
-                    case "!=" => return Some(BoolResult(( visitorEval(expr1, programState).get.asInstanceOf[IntResult].v != expr_2))) 
+                    case "<" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v < expr_2))) 
+                    case ">" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v > expr_2))) 
+                    case "<=" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v <= expr_2))) 
+                    case ">=" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v >= expr_2)))
+                    case "==" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v == expr_2))) 
+                    case "!=" => return Some(BoolResult(( Evalfunction(expr1, programState).get.asInstanceOf[IntResult].v != expr_2))) 
                 }
             }
 

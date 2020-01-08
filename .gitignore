@@ -3,6 +3,10 @@
 **/target/*
 **/test/debug/*
 **/test/target/*
+/.bloop
+/.metals
+*.classpath
+*.project
 *.out
 *.so
 *.o

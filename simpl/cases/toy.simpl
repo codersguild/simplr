@@ -1,0 +1,5 @@
+int x = 90;
+int z = 789;
+int y = x + 2 * z;
+assert(x > y - z);
+print(x + y - z);

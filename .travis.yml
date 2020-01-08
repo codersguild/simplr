@@ -6,7 +6,7 @@ scala:
   - 2.13.1
 
 before_script: 
-          cd code
+          cd simpl
 
 script:
-          sbt test
+          sbt

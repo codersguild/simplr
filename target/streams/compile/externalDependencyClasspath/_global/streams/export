@@ -1,1 +1,1 @@
-/home/virtualvms/.sbt/boot/scala-2.12.10/lib/scala-library.jar
+/home/virtualvms/Documents/Research/simpl-dsl/lib/org.sat4j.core.jar:/home/virtualvms/Documents/Research/simpl-dsl/lib/sat4j-pb.jar:/home/virtualvms/Documents/Research/simpl-dsl/lib/sat4j-sat.jar:/home/virtualvms/Documents/Research/simpl-dsl/lib/sat4j-maxsat.jar:/home/virtualvms/.sbt/boot/scala-2.12.10/lib/scala-library.jar

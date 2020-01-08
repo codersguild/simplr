@@ -30,7 +30,7 @@ $ ~run ./samples/simple.simpl
 
 ### Parse Tree
 
-![Parse-Tree](https://github.com/codersguild/parser-symbolic-exec/blob/master/code/src/main/scala/parser/grammar/grammar.png)
+![Parse-Tree](https://github.com/codersguild/simpl/blob/master/simpl/src/main/scala/parser/grammar/grammar.png)
 
 ###  Sample Output 
 
