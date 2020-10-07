@@ -8,7 +8,7 @@ using scala, z3, ANTLR4 and LLVM.
 
 ### Run
 
-Folder ```simplr``` is the base folder for all scala code. 
+Folder ```simpl``` is the base folder for all scala code. 
 
 ```
 $ cd code
