@@ -3,12 +3,12 @@
 
 ### Project
 
-Demonstrate parsing, and constraint solving on a new programming language ```simpl``` 
+Demonstrate parsing, and constraint solving on a new programming language ```simplr``` 
 using scala, z3, ANTLR4 and LLVM. 
 
 ### Run
 
-Folder ```simpl``` is the base folder for all scala code. 
+Folder ```simplr``` is the base folder for all scala code. 
 
 ```
 $ cd code
@@ -22,7 +22,7 @@ $ ~run ./samples/simple.simpl
 
  ### Grammar
 
- The grammar for ```simpl```, is in ```parser/grammar``` folder. 
+ The grammar for ```simplr```, is in ```parser/grammar``` folder. 
 
  ```
  assert (x + y * 90 > 500);
@@ -40,7 +40,7 @@ We pass ```simple.simpl``` file to  our lexer-parser and run parsing to generate
 ```Z3```  run on dummy constraints using ```scala z3 api``` .  See function ```ExampleZ3Solving()```
 in ```parser.scala```.
 
-For ```simple.simpl``` file program. 
+For ```simple.simplr``` file program. 
 
 ```bash 
         Assign : x = 90
@@ -92,7 +92,7 @@ For ```simple.simpl``` file program.
 
 ### Working
 
-1.  Z3 Modelling. 
-2.  New Grammar definition for functions & multi-line block statements.
+1. Z3 Modelling. 
+2. New Grammar definition for functions & multi-line block statements.
 3. Fix Z3 Linking errors. 
 4. Add Z3 Symbolic Equations
